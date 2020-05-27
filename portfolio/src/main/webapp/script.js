@@ -38,3 +38,24 @@ function addIrohWisdom() {
        const irohContainer = document.getElementById('iroh-container');
        irohContainer.innerText = irohQuote;
 }
+
+/**
+ * Generates a URL for a random image in the images directory and adds an img
+ * element with that URL to the page.
+ */
+function randomizeImage() {
+  // The images directory contains 13 images, so generate a random index between
+  // 1 and 13.
+  const imageIndex = Math.floor(Math.random() * 4) + 1;
+  const imgUrl = 'images/friends/friend-' + imageIndex + '.JPG';
+
+  const imgElement = document.createElement('img');
+  imgElement.src = imgUrl;
+  imgElement.height = "500";
+  imgElement.width = "500";
+
+  const imageContainer = document.getElementById('random-image-container');
+  // Remove the previous image.
+  imageContainer.innerHTML = '';
+  imageContainer.appendChild(imgElement);
+}
