@@ -59,3 +59,30 @@ function randomizeImage() {
   imageContainer.innerHTML = '';
   imageContainer.appendChild(imgElement);
 }
+
+function initMap() {
+  var centerUSA = {lat: 37.0902, lng: -95.7129};
+  var favoriteSpots = [
+    ["Mt. Ritter", 37.6894, -119.1990],
+    ["Tuckerman's Ravine", 44.2625, -71.2983],
+    ["Black Forest Trail", 41.4724, -77.5017],
+    ["Lake Serene", 47.7814, -121.5700],
+    ["Pine Knob Shelter", 39.5429, -77.6018],
+    ["Rialto Beach", 47.9173, -124.6394],
+    ["Skyline Drive", 38.0325, -78.8571]];
+
+  var mapOptions = {
+    zoom: 3,
+    center: centerUSA,
+    mapTypeId: 'satellite'
+    };
+  var map = new google.maps.Map(document.getElementById('map'), 
+    mapOptions);
+  for (var i = 0; i < favoriteSpots.length; i++) {
+    var marker = new google.maps.Marker({
+    position: new google.maps.LatLng(favoriteSpots[i][1], favoriteSpots[i][2]),
+    label: favoriteSpots[i][0],
+    map: map
+    });
+  }
+}
