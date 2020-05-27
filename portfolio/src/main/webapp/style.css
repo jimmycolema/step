@@ -7,3 +7,8 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+#map {
+  width: 504px;
+  height: 378px;
+}

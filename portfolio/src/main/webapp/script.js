@@ -16,27 +16,27 @@
  * Adds a random piece of Uncle Iroh wisdom to the page
  */
 function addIrohWisdom() {
-    const irohQuotes = 
-      ["Sharing tea with a fascinating stranger is one of life's true \
-        delights.",
-       "Hope is something you give yourself. That is the meaning of \
-        inner strength",
-       "Destiny is a funny thing. You never know how things are going to work \
-        out.", 
-       "It is usually best to admit mistakes when they occur, and to seek to \
-        restore honor.",
-       "While it is always best to believe in onself, a little help from \
-        others can be a great blessing.",
-       "Pride is not the opposite of shame, but its source. True humility \
-        is the only antidote to shame.",
-       "Life happens wherever you are, whether you make it or not."];
+  const irohQuotes = 
+    ["Sharing tea with a fascinating stranger is one of life's true \
+      delights.",
+     "Hope is something you give yourself. That is the meaning of \
+      inner strength",
+     "Destiny is a funny thing. You never know how things are going to work \
+      out.", 
+     "It is usually best to admit mistakes when they occur, and to seek to \
+      restore honor.",
+     "While it is always best to believe in onself, a little help from \
+      others can be a great blessing.",
+     "Pride is not the opposite of shame, but its source. True humility \
+      is the only antidote to shame.",
+     "Life happens wherever you are, whether you make it or not."];
 
-       // Pick random piece of Iroh wisdom
-       const irohQuote = irohQuotes[Math.floor(Math.random() * irohQuotes.length)]
+  // Pick random piece of Iroh wisdom
+  const irohQuote = irohQuotes[Math.floor(Math.random() * irohQuotes.length)]
 
-       // Add it to the page
-       const irohContainer = document.getElementById('iroh-container');
-       irohContainer.innerText = irohQuote;
+  // Add it to the page
+  const irohContainer = document.getElementById('iroh-container');
+  irohContainer.innerText = irohQuote;
 }
 
 /**
@@ -51,8 +51,8 @@ function randomizeImage() {
 
   const imgElement = document.createElement('img');
   imgElement.src = imgUrl;
-  imgElement.height = "500";
-  imgElement.width = "500";
+  imgElement.width = "504";
+  imgElement.height = "378";
 
   const imageContainer = document.getElementById('random-image-container');
   // Remove the previous image.
