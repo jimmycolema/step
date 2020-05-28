@@ -13,16 +13,79 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random piece of Uncle Iroh wisdom to the page
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function addIrohWisdom() {
+  const irohQuotes = 
+    ["Sharing tea with a fascinating stranger is one of life's true \
+      delights.",
+     "Hope is something you give yourself. That is the meaning of \
+      inner strength",
+     "Destiny is a funny thing. You never know how things are going to work \
+      out.", 
+     "It is usually best to admit mistakes when they occur, and to seek to \
+      restore honor.",
+     "While it is always best to believe in onself, a little help from \
+      others can be a great blessing.",
+     "Pride is not the opposite of shame, but its source. True humility \
+      is the only antidote to shame.",
+     "Life happens wherever you are, whether you make it or not."];
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  // Pick random piece of Iroh wisdom
+  const irohQuote = irohQuotes[Math.floor(Math.random() * irohQuotes.length)]
 
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  // Add it to the page
+  const irohContainer = document.getElementById('iroh-container');
+  irohContainer.innerText = irohQuote;
+}
+
+/**
+ * Generates a URL for a random image in the images directory and adds an img
+ * element with that URL to the page.
+ */
+function randomizeImage() {
+  // The images directory contains 4 images, so generate a random index between
+  // 1 and 4.
+  const imageIndex = Math.floor(Math.random() * 4) + 1;
+  const imgUrl = 'images/friends/friend-' + imageIndex + '.JPG';
+
+  const imgElement = document.createElement('img');
+  imgElement.src = imgUrl;
+  imgElement.width = "504";
+
+  const imageContainer = document.getElementById('random-image-container');
+  // Remove the previous image.
+  imageContainer.innerHTML = '';
+  imageContainer.appendChild(imgElement);
+}
+
+/**
+ * Generates a map centered on the United States with markers placed on 
+ * specified locations. 
+ */
+function initMap() {
+  var centerUSA = {lat: 37.0902, lng: -95.7129};
+  var favoriteSpots = [
+    ["Mt. Ritter", 37.6894, -119.1990],
+    ["Tuckerman's Ravine", 44.2625, -71.2983],
+    ["Black Forest Trail", 41.4724, -77.5017],
+    ["Lake Serene", 47.7814, -121.5700],
+    ["Pine Knob Shelter", 39.5429, -77.6018],
+    ["Rialto Beach", 47.9173, -124.6394],
+    ["Skyline Drive", 38.0325, -78.8571]];
+
+  var mapOptions = {
+    zoom: 3,
+    center: centerUSA,
+    mapTypeId: 'satellite'
+    };
+  var map = new google.maps.Map(document.getElementById('map'), 
+    mapOptions);
+  for (var i = 0; i < favoriteSpots.length; i++) {
+    var marker = new google.maps.Marker({
+    position: new google.maps.LatLng(favoriteSpots[i][1], favoriteSpots[i][2]),
+    label: favoriteSpots[i][0],
+    map: map
+    });
+  }
 }

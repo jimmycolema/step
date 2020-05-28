@@ -8,11 +8,34 @@
   </head>
   <body>
     <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+      <h1>Jimmy Coleman</h1>
+      <img src="images/jimmy-2.jpg" width=400/>
+      <p>Hey all!</p>
+      <p>
+        My name is Jimmy Coleman, and I'm a Google STEP intern (Summer 2020)!
+        In my free time, I can be found in the mountains backpacking, playing
+        on my guitar, or brewing a fresh cup of Maxwell House coffee!
+      </p>
+
+      <p>
+        Click <a href="backpacking.html">here</a> to see pictures of my
+        backpacking adventures!
+      </p>
+
+      <div id="map"></div>
+      <script src="initMap()"></script>
+      <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyTlEnrU9rGEnhOoHPAEjj-ZFpwYyHxcY&callback=initMap"
+      async defer></script>
+
+      <p>
+        Click <a href="random.html">here</a> for a random image of me 
+        adventuring with others!
+      </p>
+
+      <p>Click here to get an Uncle Iroh quote:</p>
+      <button onclick="addIrohWisdom()">Dispense Wisdom</button>
+      <div id="iroh-container"></div>
+
     </div>
   </body>
 </html>
