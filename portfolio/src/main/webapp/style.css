@@ -1,11 +1,40 @@
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
 body {
   background-color: #595959
+}
+
+/* Container for image text */
+.caption-container {
+  text-align: center;
+  background-color: #222;
+  padding: 2px 16px;
+  color: white;
+}
+
+/* Six columns side by side */
+.column {
+  float: left;
+  width: 16.66%;
 }
 
 #content {
   margin-left: auto;
   margin-right: auto;
   width: 650px;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor {
+  cursor: pointer;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+  opacity: 0.6;
 }
 
 #greeting-container {
@@ -17,6 +46,11 @@ body {
   width: 504px;
 }
 
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
 /* Style the navbar */
 #navbar {
   overflow: hidden;
@@ -25,17 +59,61 @@ body {
 
 /* Navbar links */
 #navbar a {
-  float: left;
-  display: block;
   color: #f2f2f2;
-  text-align: center;
+  display: block;
+  float: left;
   padding: 14px;
+  text-align: center;
   text-decoration: none;
 }
 
-/* Page content */
-.content {
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  width: auto;
   padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Position the image container (needed to position the left and right arrows) */
+.slideshow-container {
+  position: relative;
 }
 
 /* The sticky class is added to the navbar with JS when it reaches its 
@@ -53,4 +131,8 @@ body {
  */
 .sticky + .content {
   padding-top: 60px;
+}
+
+* {
+  box-sizing: border-box;
 }
