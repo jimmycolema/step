@@ -44,15 +44,14 @@ function addIrohWisdom() {
  * element with that URL to the page.
  */
 function randomizeImage() {
-  // The images directory contains 13 images, so generate a random index between
-  // 1 and 13.
+  // The images directory contains 4 images, so generate a random index between
+  // 1 and 4.
   const imageIndex = Math.floor(Math.random() * 4) + 1;
   const imgUrl = 'images/friends/friend-' + imageIndex + '.JPG';
 
   const imgElement = document.createElement('img');
   imgElement.src = imgUrl;
   imgElement.width = "504";
-  imgElement.height = "378";
 
   const imageContainer = document.getElementById('random-image-container');
   // Remove the previous image.
@@ -60,6 +59,10 @@ function randomizeImage() {
   imageContainer.appendChild(imgElement);
 }
 
+/**
+ * Generates a map centered on the United States with markers placed on 
+ * specified locations. 
+ */
 function initMap() {
   var centerUSA = {lat: 37.0902, lng: -95.7129};
   var favoriteSpots = [
