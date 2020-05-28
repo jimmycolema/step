@@ -51,7 +51,7 @@ function randomizeImage() {
 
   const imgElement = document.createElement('img');
   imgElement.src = imgUrl;
-  imgElement.width = "504";
+  imgElement.width = "1000";
 
   const imageContainer = document.getElementById('random-image-container');
   // Remove the previous image.
