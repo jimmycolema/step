@@ -169,14 +169,15 @@ body, html {
 }
 
 .random-image-container {
-  background-position: center;
+  clear: right;
+  float: right;
   height: 75%;
   margin-top: 5px;
   position: relative;
-  text-align: center;
 }
 
 #random-image-text {
+  clear: left;
   float: left;
   margin-bottom: 5px;
   margin-left: 10px;
@@ -210,6 +211,15 @@ body, html {
  */
 .sticky + .content {
   padding-top: 60px;
+}
+
+.text-box {
+  background-color: #333;
+  border: 1px;
+  border-color: black;
+  border-style: solid;
+  margin: 5px;
+  padding: 1em;
 }
 
 * {
