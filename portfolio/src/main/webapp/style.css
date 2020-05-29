@@ -13,6 +13,18 @@
   width: 100px;
 }
 
+#biography {
+  clear: left;
+  color: white;
+  float: left;
+  font-size: larger;
+  margin-left: 10px;
+  margin-right: auto;
+  margin-top: 5px;
+  text-align: justify;
+  width: 50%;
+}
+
 body {
   background-color: #555;
 }
@@ -41,7 +53,6 @@ body, html {
   color: white;
   margin-left: auto;
   margin-right: auto;
-  text-align: center;
   width: 650px;
 }
 
@@ -77,8 +88,15 @@ body, html {
 }
 
 #map {
-  height: 378px;
-  width: 504px;
+  border: solid black 1px;
+  clear: right;
+  float: right;
+  height: 500px;
+  margin-right: 5px;
+  margin-left: 10px;
+  margin-top: 5px;
+  padding: 2px;
+  width: 800px;
 }
 
 /* Hide the images by default */
