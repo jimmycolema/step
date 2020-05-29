@@ -41,6 +41,7 @@ body, html {
   color: white;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
   width: 650px;
 }
 
@@ -137,6 +138,32 @@ body, html {
   padding: 8px 12px;
   position: absolute;
   top: 0;
+}
+
+#random-image-button {
+  align-content: center;
+  margin-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  position: relative;
+  text-align: center;
+}
+
+.random-image-container {
+  background-position: center;
+  height: 75%;
+  margin-top: 5px;
+  position: relative;
+  text-align: center;
+}
+
+#random-image-text {
+  float: left;
+  margin-bottom: 5px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: justify;
 }
 
 .row:after {
