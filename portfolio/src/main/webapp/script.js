@@ -44,9 +44,9 @@ function addIrohWisdom() {
  * element with that URL to the page.
  */
 function randomizeImage() {
-  // The images directory contains 4 images, so generate a random index between
-  // 1 and 4.
-  const imageIndex = Math.floor(Math.random() * 4) + 1;
+  // The images directory contains 11 images, so generate a random index between
+  // 1 and 11.
+  const imageIndex = Math.floor(Math.random() * 11) + 1;
   const imgUrl = 'images/friends/friend-' + imageIndex + '.JPG';
 
   const imgElement = document.createElement('img');
