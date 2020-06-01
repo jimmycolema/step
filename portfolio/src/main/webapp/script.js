@@ -74,7 +74,7 @@ function initMap() {
     ["Rialto Beach", 47.9173, -124.6394],
     ["Skyline Drive", 38.0325, -78.8571]];
 
-  let mapOptions = {
+  const mapOptions = {
     zoom: 3,
     center: centerUSA,
     mapTypeId: 'satellite'
