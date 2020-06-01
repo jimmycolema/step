@@ -16,39 +16,39 @@
     <div class="slideshow-container">
       <div class="mySlides">
         <div class="numbertext">1 / 10</div>
-          <img src="images/backpacking/bp-1.JPG" style="width:100%">
+        <img src="images/backpacking/bp-1.JPG" style="width:100%">
       </div>
       <div class="mySlides">
         <div class="numbertext">2 / 10</div>
-          <img src="images/backpacking/bp-2.JPG" style="width:100%">
+        <img src="images/backpacking/bp-2.JPG" style="width:100%">
       </div>
       <div class="mySlides">
         <div class="numbertext">4 / 10</div>
-          <img src="images/backpacking/bp-4.JPG" style="width:100%">
+        <img src="images/backpacking/bp-4.JPG" style="width:100%">
       </div>
       <div class="mySlides">
         <div class="numbertext">5 / 10</div>
-          <img src="images/backpacking/bp-5.JPG" style="width:100%">
+        <img src="images/backpacking/bp-5.JPG" style="width:100%">
       </div>
       <div class="mySlides">
         <div class="numbertext">6 / 10</div>
-          <img src="images/backpacking/bp-6.JPG" style="width:100%">
+        <img src="images/backpacking/bp-6.JPG" style="width:100%">
       </div>
       <div class="mySlides">
         <div class="numbertext">7 / 10</div>
-          <img src="images/backpacking/bp-9.jpg" style="width:100%">
+        <img src="images/backpacking/bp-9.jpg" style="width:100%">
       </div>
       <div class="mySlides">
         <div class="numbertext">8 / 10</div>
-          <img src="images/backpacking/bp-8.jpg" style="width:100%">
+        <img src="images/backpacking/bp-8.jpg" style="width:100%">
       </div>
       <div class="mySlides">
         <div class="numbertext">9 / 10</div>
-          <img src="images/backpacking/bp-10.jpg" style="width:100%">
+        <img src="images/backpacking/bp-10.jpg" style="width:100%">
       </div>
       <div class="mySlides">
         <div class="numbertext">10 / 10</div>
-          <img src="images/backpacking/bp-7.jpg" style="width:100%">
+        <img src="images/backpacking/bp-7.jpg" style="width:100%">
       </div>
 
       <!-- Next and previous buttons -->
@@ -103,8 +103,8 @@
         </div>
         <div class="column">
           <img class="demo cursor" src="images/backpacking/bp-7.jpg" 
-          style="width:100%" onclick="setCurrentSlide(9)" 
-          alt="Hole in the Wall, Rialto Beach; Shores of the Olympic">
+            style="width:100%" onclick="setCurrentSlide(9)" 
+            alt="Hole in the Wall, Rialto Beach; Shores of the Olympic">
         </div>
       </div>
     </div>
@@ -122,7 +122,7 @@
       }
 
       function showSlides(numSlidesToShow) {
-        let slides = document.getElementsByClassName("mySlides");
+        const slides = document.getElementsByClassName("mySlides");
         let dots = document.getElementsByClassName("demo");
         let captionText = document.getElementById("caption");
         if (numSlidesToShow > slides.length) {slideIndex = 1}
