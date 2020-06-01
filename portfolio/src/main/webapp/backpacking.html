@@ -113,20 +113,20 @@
       let slideIndex = 1;
       showSlides(slideIndex);
 
-      function advanceSlidesBy(n) {
-        showSlides(slideIndex += n);
+      function advanceSlidesBy(incrementBy) {
+        showSlides(slideIndex += incrementBy);
       }
 
-      function setCurrentSlide(n) {
-        showSlides(slideIndex = n);
+      function setCurrentSlide(slideNumber) {
+        showSlides(slideIndex = slideNumber);
       }
 
-      function showSlides(n) {
+      function showSlides(numSlidesToShow) {
         let slides = document.getElementsByClassName("mySlides");
         let dots = document.getElementsByClassName("demo");
         let captionText = document.getElementById("caption");
-        if (n > slides.length) {slideIndex = 1}
-        if (n < 1) {slideIndex = slides.length}
+        if (numSlidesToShow > slides.length) {slideIndex = 1}
+        if (numSlidesToShow < 1) {slideIndex = slides.length}
         for (let i = 0; i < slides.length; i++) {
           slides[i].style.display = "none";
         }
