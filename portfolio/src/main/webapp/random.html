@@ -7,11 +7,28 @@
     <script src="script.js"></script>
   </head>
   <body>
+    <div id="navbar">
+      <a href="index.html">Home</a>
+      <a href="backpacking.html">Backpacking</a>
+      <a href="random.html">Humans I Love</a>
+    </div>
     <div id="content">
-      <h1>Adventuring, together!</h1>
-      <p>Click here to see a picture of me on an adventure with friends!</p>
-      <button onclick="randomizeImage()">Friendship!
-      </button>
+      <div id="random-image-text">
+        <div class="text-box">
+          <h1>People are the Anchor.</h1>
+          <p>
+            If I've learned anything in my twenty years of existing, it's that
+            the places you'll find yourself are only ever temporary. Homes, 
+            belongings, and material possessions have come and gone, sometimes in
+            the matter of seconds, throughout my life. My friends and my family
+            are my dearest possessions, my reason for getting up in the morning, 
+            my anchors. Life is nuts, but it's those you love along the way that
+            make it worth it. 
+          </p>
+          <div id="random-image-button">
+            <button onclick="randomizeImage()">For a Memory</button>
+          </div>
+      </div>
       <div id="random-image-container"></div>
     </div>
   </body>
