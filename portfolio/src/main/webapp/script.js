@@ -89,3 +89,24 @@ function initMap() {
     });
   }
 }
+
+function getDataContent() {
+  console.log('Fetching content from "data.html".');
+
+  const dataPromise = fetch('/data');
+  dataPromise.then(handleData);
+}
+
+function handleData(data) {
+  console.log('Handling data promise')
+
+  const textPromise = data.text();
+  textPromise.then(addDataToDOM);
+}
+
+function addDataToDOM(text) {
+  console.log('Adding data to DOM: ' + text);
+
+  const dataContainer = document.getElementById('data-container');
+  dataContainer.innerHTML = text;
+}
