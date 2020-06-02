@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
 public class DataServlet extends HttpServlet {
 
   @Override
-  public String doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
 
     ArrayList<String> messages = new ArrayList<String>();
@@ -36,7 +36,7 @@ public class DataServlet extends HttpServlet {
     messages.add("Don't Get Lost in Heaven");
 
     String json = convertToJson(messages);
-    return json;
+    response.getWriter().println(json);
   }
 
   private String convertToJson(ArrayList<String> messages) {

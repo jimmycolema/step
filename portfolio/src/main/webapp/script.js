@@ -44,14 +44,14 @@ function addIrohWisdom() {
  * element with that URL to the page.
  */
 function randomizeImage() {
-  // The images directory contains 4 images, so generate a random index between
-  // 1 and 4.
-  const imageIndex = Math.floor(Math.random() * 4) + 1;
+  // The images directory contains 11 images, so generate a random index between
+  // 1 and 11.
+  const imageIndex = Math.floor(Math.random() * 11) + 1;
   const imgUrl = 'images/friends/friend-' + imageIndex + '.JPG';
 
   const imgElement = document.createElement('img');
   imgElement.src = imgUrl;
-  imgElement.width = "504";
+  imgElement.width = "1000";
 
   const imageContainer = document.getElementById('random-image-container');
   // Remove the previous image.
@@ -64,8 +64,8 @@ function randomizeImage() {
  * specified locations. 
  */
 function initMap() {
-  var centerUSA = {lat: 37.0902, lng: -95.7129};
-  var favoriteSpots = [
+  const centerUSA = {lat: 37.0902, lng: -95.7129};
+  const favoriteSpots = [
     ["Mt. Ritter", 37.6894, -119.1990],
     ["Tuckerman's Ravine", 44.2625, -71.2983],
     ["Black Forest Trail", 41.4724, -77.5017],
@@ -74,18 +74,18 @@ function initMap() {
     ["Rialto Beach", 47.9173, -124.6394],
     ["Skyline Drive", 38.0325, -78.8571]];
 
-  var mapOptions = {
+  const mapOptions = {
     zoom: 3,
     center: centerUSA,
     mapTypeId: 'satellite'
     };
-  var map = new google.maps.Map(document.getElementById('map'), 
+  let map = new google.maps.Map(document.getElementById('map'), 
     mapOptions);
-  for (var i = 0; i < favoriteSpots.length; i++) {
-    var marker = new google.maps.Marker({
-    position: new google.maps.LatLng(favoriteSpots[i][1], favoriteSpots[i][2]),
-    label: favoriteSpots[i][0],
-    map: map
+  for (let i = 0; i < favoriteSpots.length; i++) {
+    let marker = new google.maps.Marker({
+      position: new google.maps.LatLng(favoriteSpots[i][1], favoriteSpots[i][2]),
+      label: favoriteSpots[i][0],
+      map: map
     });
   }
 }
@@ -98,8 +98,8 @@ function getDataContent() {
 }
 
 function handleData(data) {
-  console.log('Handling data promise')
-
+  console.log('Handling data promise');
+  
   const textPromise = data.text();
   textPromise.then(addDataToDOM);
 }
@@ -109,4 +109,29 @@ function addDataToDOM(text) {
 
   const dataContainer = document.getElementById('data-container');
   dataContainer.innerHTML = text;
+}
+
+/**
+ * Fetches text from the server ArrayList and adds them to the DOM.
+ */
+function getTextFromServerArray() {
+  fetch('/data').then(response => response.json()).then((textArray) => {
+
+    const arrayTextElement = document.getElementById('array-text-container');
+    arrayTextElement.innerHTML = '';
+    
+    for (let i = 0; i < textArray.length; i++) {
+      arrayTextElement.appendChild(
+          createListElement(textArray[i] + '\n'));
+    }
+  });
+}
+
+/*
+ * Creates an <li> element containing text. 
+ */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
