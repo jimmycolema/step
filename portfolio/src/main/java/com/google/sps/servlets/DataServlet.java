@@ -28,5 +28,10 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
     response.getWriter().println("<h1>Hello Jimmy!</h1>");
+
+    const ArrayList<String> messages = new ArrayList<String>();
+    messages.add("O Green World");
+    messages.add("Fire Coming out of the Monkey's Head");
+    messages.add("Don't Get Lost in Heaven");
   }
 }
