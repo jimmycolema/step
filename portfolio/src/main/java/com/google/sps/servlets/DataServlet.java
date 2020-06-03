@@ -17,6 +17,9 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,10 +32,20 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
-  private ArrayList<String> messages = new ArrayList<String>();
-
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    // Get all messages stored on Datastore
+    ArrayList<String> messages = new ArrayList<String>();
+    for (Entity entity : results.asIterable()) {
+
+      String comment = (String) entity.getProperty("comment");
+      messages.add(comment);
+    }
+
     response.setContentType("text/html;");
     String json = convertToJson(messages);
     response.getWriter().println(json);
@@ -44,6 +57,7 @@ public class DataServlet extends HttpServlet {
     String comment = getParameter(request, "text-input", "");
     boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
     boolean lowerCase = Boolean.parseBoolean(getParameter(request, "lower-case", "false"));
+    long timestamp = System.currentTimeMillis();
 
     if (upperCase) {
       comment = comment.toUpperCase();
@@ -54,6 +68,7 @@ public class DataServlet extends HttpServlet {
 
     Entity taskEntity = new Entity("Comment");
     taskEntity.setProperty("comment", comment);
+    taskEntity.setProperty("timestamp", timestamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(taskEntity);
@@ -78,12 +93,3 @@ public class DataServlet extends HttpServlet {
     }
     return value;
   }
-
-  /*
-   * Setter function to add comment to private ArrayList data structure holding
-   * existing user comments
-   */
-  private void addCommentToForum(String comment) {
-    messages.add(comment);
-  }
-}
