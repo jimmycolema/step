@@ -63,6 +63,10 @@ public class CommentForumServlet extends HttpServlet {
     boolean lowerCase = Boolean.parseBoolean(getParameter(request, "lower-case", "false"));
     long timestamp = System.currentTimeMillis();
 
+    if (upperCase && lowerCase) {
+      upperCase = false;
+      lowerCase = false;
+    }
     if (upperCase) {
       comment = comment.toUpperCase();
     }
