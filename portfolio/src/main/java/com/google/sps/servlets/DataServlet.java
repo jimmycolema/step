@@ -26,22 +26,57 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  private ArrayList<String> messages = new ArrayList<String>();
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
-
-    ArrayList<String> messages = new ArrayList<String>();
-    messages.add("O Green World");
-    messages.add("Fire Coming out of the Monkey's Head");
-    messages.add("Don't Get Lost in Heaven");
-
     String json = convertToJson(messages);
     response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Parse input from the form
+    String comment = getParameter(request, "text-input", "");
+    boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
+    boolean lowerCase = Boolean.parseBoolean(getParameter(request, "lower-case", "false"));
+
+    if (upperCase) {
+      comment = comment.toUpperCase();
+    }
+    if (lowerCase) {
+      comment = comment.toLowerCase();
+    }
+
+    addCommentToForum(comment);
+    response.sendRedirect("/index.html");
+    return;
   }
 
   private String convertToJson(ArrayList<String> messages) {
     Gson gson = new Gson();
     String json = gson.toJson(messages);
     return json;
+  }
+
+  /*
+   * @return the request parameter, or the default value if the parameter
+   *         was not specified by the client
+   */
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
+  }
+
+  /*
+   * Setter function to add comment to private ArrayList data structure holding
+   * existing user comments
+   */
+  private void addCommentToForum(String comment) {
+    messages.add(comment);
   }
 }

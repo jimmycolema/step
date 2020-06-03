@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getTextFromServerArray()">
 
     <div id="navbar">
       <a href="index.html">Home</a>
@@ -57,14 +57,16 @@
 
       <div class="text-box">
         <form action="/data" method="POST">
-
           <p>Comment Forum</p>
+
+          <div id="array-text-container"></div>
+          <br/>
+
           <textarea name="text-input">Enter comment here...</textarea>
           <br/>
-          
           <input type="checkbox" name="upper-case" value="true"> Upper-case
           <br/>
-          <input type="checkbox" name="sort" value="true"> Alphabetize
+          <input type="checkbox" name="lower-case" value="true"> Lower-case
           <br/><br/>
 
           <input type="submit" />
