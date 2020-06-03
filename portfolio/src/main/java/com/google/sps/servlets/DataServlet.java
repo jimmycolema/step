@@ -14,6 +14,9 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,9 +52,13 @@ public class DataServlet extends HttpServlet {
       comment = comment.toLowerCase();
     }
 
-    addCommentToForum(comment);
+    Entity taskEntity = new Entity("Comment");
+    taskEntity.setProperty("comment", comment);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(taskEntity);
+
     response.sendRedirect("/index.html");
-    return;
   }
 
   private String convertToJson(ArrayList<String> messages) {
