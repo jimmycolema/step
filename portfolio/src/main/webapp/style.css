@@ -97,12 +97,11 @@ body, html {
 
 #map {
   border: solid black 1px;
-  clear: right;
-  float: right;
+  float: left;
   height: 500px;
   margin-right: 5px;
   margin-left: 10px;
-  margin-top: 5px;
+  margin-top: 10px;
   padding: 2px;
   width: 800px;
 }
