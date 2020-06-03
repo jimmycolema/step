@@ -17,6 +17,7 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
@@ -34,14 +35,14 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+    
+    private static final Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
     // Get all messages stored on Datastore
     ArrayList<String> messages = new ArrayList<String>();
-    for (Entity entity : results.asIterable()) {
-
+    for (Entity entity : results.asIterable() {
       String comment = (String) entity.getProperty("comment");
       messages.add(comment);
     }
@@ -66,18 +67,18 @@ public class DataServlet extends HttpServlet {
       comment = comment.toLowerCase();
     }
 
-    Entity taskEntity = new Entity("Comment");
-    taskEntity.setProperty("comment", comment);
-    taskEntity.setProperty("timestamp", timestamp);
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("comment", comment);
+    commentEntity.setProperty("timestamp", timestamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(taskEntity);
+    datastore.put(commentEntity);
 
     response.sendRedirect("/index.html");
   }
 
   private String convertToJson(ArrayList<String> messages) {
-    Gson gson = new Gson();
+    private static final Gson gson = new Gson();
     String json = gson.toJson(messages);
     return json;
   }
@@ -93,3 +94,4 @@ public class DataServlet extends HttpServlet {
     }
     return value;
   }
+}
