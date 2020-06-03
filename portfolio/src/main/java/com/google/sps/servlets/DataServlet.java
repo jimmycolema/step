@@ -33,16 +33,19 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
+  private static final Query query = new Query("Comment")
+      .addSort("timestamp", SortDirection.DESCENDING);
+  private static final Gson gson = new Gson();
+  
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    
-    private static final Query query = new Query("Comment").addSort("timestamp", SortDirection.DESCENDING);
+
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
     // Get all messages stored on Datastore
     ArrayList<String> messages = new ArrayList<String>();
-    for (Entity entity : results.asIterable() {
+    for (Entity entity : results.asIterable()) {
       String comment = (String) entity.getProperty("comment");
       messages.add(comment);
     }
@@ -78,7 +81,6 @@ public class DataServlet extends HttpServlet {
   }
 
   private String convertToJson(ArrayList<String> messages) {
-    private static final Gson gson = new Gson();
     String json = gson.toJson(messages);
     return json;
   }
