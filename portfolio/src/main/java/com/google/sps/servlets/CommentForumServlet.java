@@ -39,14 +39,14 @@ public class CommentForumServlet extends HttpServlet {
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String numCommentsToDisplayString = request.getParameter("num-comments-to-display");
+    String maxNumCommentsString = request.getParameter("max-num-comments");
     // Convert the input to an int.
-    int numCommentsToDisplay;
+    int maxNumComments;
     try {
-      numCommentsToDisplay = Integer.parseInt(numCommentsToDisplayString);
+      maxNumComments = Integer.parseInt(maxNumCommentsString);
     } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + numCommentsToDisplayString);
-      return;
+      System.err.println("Could not convert to int: " + maxNumCommentsString);
+      maxNumComments = 10;
     }
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -54,7 +54,7 @@ public class CommentForumServlet extends HttpServlet {
 
     // Get all messages stored on Datastore
     ArrayList<String> messages = new ArrayList<String>();
-    for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(numCommentsToDisplay))) {
+    for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(maxNumComments))) {
       String comment = (String) entity.getProperty("comment");
       messages.add(comment);
     }

@@ -114,17 +114,18 @@ function addDataToDOM(text) {
 /**
  * Fetches text from the server ArrayList and adds them to the DOM.
  */
-function getTextFromServerArray() {
-  fetch('/data').then(response => response.json()).then((textArray) => {
+async function displayCommentsToPage() {
+  const maxNumComments = document.getElementById("max-num-comments").value;
+  const response = await fetch(`/data?max-num-comments=${maxNumComments}`);
+  const textArray = await response.json();
 
-    const arrayTextElement = document.getElementById('array-text-container');
-    arrayTextElement.innerHTML = '';
+  const arrayTextElement = document.getElementById('array-text-container');
+  arrayTextElement.innerHTML = '';
     
-    for (let i = 0; i < textArray.length; i++) {
-      arrayTextElement.appendChild(
-          createListElement(textArray[i] + '\n'));
-    }
-  });
+  for (let i = 0; i < textArray.length; i++) {
+    arrayTextElement.appendChild(
+        createListElement(textArray[i] + '\n'));
+  }
 }
 
 /*
