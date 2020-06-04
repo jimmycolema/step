@@ -39,13 +39,22 @@ public class CommentForumServlet extends HttpServlet {
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    String numCommentsToDisplayString = request.getParameter("num-comments-to-display");
+    // Convert the input to an int.
+    int numCommentsToDisplay;
+    try {
+      numCommentsToDisplay = Integer.parseInt(numCommentsToDisplayString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + numCommentsToDisplayString);
+      return;
+    }
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
     // Get all messages stored on Datastore
     ArrayList<String> messages = new ArrayList<String>();
-    for (Entity entity : results.asIterable()) {
+    for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(numCommentsToDisplay))) {
       String comment = (String) entity.getProperty("comment");
       messages.add(comment);
     }
