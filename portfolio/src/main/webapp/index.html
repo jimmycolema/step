@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="displayCommentsToPage()">
 
     <div id="navbar">
       <a href="index.html">Home</a>
@@ -54,8 +54,28 @@
         <button onclick="addIrohWisdom()">Dispense Wisdom</button>
         <div id="iroh-container"></div>
       </div>
-    </div>
 
+      <div class="text-box">
+        <h2>Comment Forum</h2>
+
+        <label for="max-num-comments">Choose number of comments to display:</label>
+        <input type="number" id="max-num-comments" value="5" onchange="displayCommentsToPage()">
+        <div id="array-text-container"></div>
+        <br/>
+
+        <form action="/comments" method="POST">
+          <textarea name="text-input">Enter comment here...</textarea>
+          <br/>
+          <input type="checkbox" name="upper-case" value="true"> Upper-case
+          <br/>
+          <input type="checkbox" name="lower-case" value="true"> Lower-case
+          <br/><br/>
+          <input type="submit" />
+        </form>
+
+      </div>
+    </div>
+  
     <div id="map"></div>
     <script src="initMap()"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyTlEnrU9rGEnhOoHPAEjj-ZFpwYyHxcY&callback=initMap"
