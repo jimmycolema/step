@@ -39,15 +39,7 @@ public class CommentForumServlet extends HttpServlet {
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String maxNumCommentsString = request.getParameter("max-num-comments");
-    // Convert the input to an int.
-    int maxNumComments;
-    try {
-      maxNumComments = Integer.parseInt(maxNumCommentsString);
-    } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + maxNumCommentsString);
-      maxNumComments = 10;
-    }
+    int maxNumComments = getMaxNumComments(request);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -108,5 +100,28 @@ public class CommentForumServlet extends HttpServlet {
       return defaultValue;
     }
     return value;
+  }
+
+  private int getMaxNumComments(HttpServletRequest request) {
+    String maxNumCommentsString = request.getParameter("max-num-comments");
+    // Convert the input to an int.
+    int maxNumComments;
+    try {
+      maxNumComments = Integer.parseInt(maxNumCommentsString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + maxNumCommentsString);
+      // If conversion fails, set default value
+      maxNumComments = 5;
+    }
+
+    // Enforce bounds on number of comments displayed
+    if (maxNumComments < 0) {
+      maxNumComments = 0;
+    }
+    if (maxNumComments > 100) {
+      maxNumComments = 100;
+    }
+
+    return maxNumComments;
   }
 }
