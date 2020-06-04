@@ -90,27 +90,6 @@ function initMap() {
   }
 }
 
-function getDataContent() {
-  console.log('Fetching content from "data.html".');
-
-  const dataPromise = fetch('/comments');
-  dataPromise.then(handleData);
-}
-
-function handleData(data) {
-  console.log('Handling data promise');
-  
-  const textPromise = data.text();
-  textPromise.then(addDataToDOM);
-}
-
-function addDataToDOM(text) {
-  console.log('Adding data to DOM: ' + text);
-
-  const dataContainer = document.getElementById('data-container');
-  dataContainer.innerHTML = text;
-}
-
 /**
  * Fetches text from the server ArrayList and adds them to the DOM.
  */
