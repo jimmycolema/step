@@ -93,7 +93,7 @@ function initMap() {
 function getDataContent() {
   console.log('Fetching content from "data.html".');
 
-  const dataPromise = fetch('/data');
+  const dataPromise = fetch('/comments');
   dataPromise.then(handleData);
 }
 
@@ -116,7 +116,7 @@ function addDataToDOM(text) {
  */
 async function displayCommentsToPage() {
   const maxNumComments = document.getElementById("max-num-comments").value;
-  const response = await fetch(`/data?max-num-comments=${maxNumComments}`);
+  const response = await fetch(`/comments?max-num-comments=${maxNumComments}`);
   const textArray = await response.json();
 
   const arrayTextElement = document.getElementById('array-text-container');
