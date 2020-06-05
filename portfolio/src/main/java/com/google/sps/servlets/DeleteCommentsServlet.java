@@ -36,8 +36,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/delete-comments")
 public class DeleteCommentsServlet extends HttpServlet {
   
-  private static final Query query = new Query("Comment")
-      .addSort("timestamp", SortDirection.DESCENDING);
+  private static final Query query = new Query("Comment");
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
