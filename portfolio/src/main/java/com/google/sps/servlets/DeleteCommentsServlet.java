@@ -25,6 +25,8 @@ import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,9 +44,13 @@ public class DeleteCommentsServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    for (Entity entity : results.asIterable()) {
-      Key commentKey = entity.getKey();
-      datastore.delete(commentKey);
-    }
+    List<Key> commentKeysList = 
+        results
+            .asList(FetchOptions.Builder.withDefaults())
+            .stream()
+            .map(Entity::getKey)
+            .collect(Collectors.toList());
+
+    datastore.delete(commentKeysList);
   }
 }
