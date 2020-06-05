@@ -33,8 +33,11 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/comments")
 public class CommentForumServlet extends HttpServlet {
 
-  private static final Query query = new Query("Comment");
   private static final Gson gson = new Gson();
+  private static final Query query = new Query("Comment")
+    .addSort("timestamp", SortDirection.DESCENDING);
+  private static final int MAX_NUM_COMMENTS = 100;
+  private static final int MIN_NUM_COMMENTS = 0;
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -114,11 +117,11 @@ public class CommentForumServlet extends HttpServlet {
     }
 
     // Enforce bounds on number of comments displayed
-    if (maxNumComments < 0) {
-      maxNumComments = 0;
+    if (maxNumComments < MIN_NUM_COMMENTS) {
+      maxNumComments = MIN_NUM_COMMENTS;
     }
-    if (maxNumComments > 100) {
-      maxNumComments = 100;
+    if (maxNumComments > MAX_NUM_COMMENTS) {
+      maxNumComments = MAX_NUM_COMMENTS;
     }
 
     return maxNumComments;
