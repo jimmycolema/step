@@ -33,8 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/comments")
 public class CommentForumServlet extends HttpServlet {
 
-  private static final Query query = new Query("Comment")
-      .addSort("timestamp", SortDirection.DESCENDING);
+  private static final Query query = new Query("Comment");
   private static final Gson gson = new Gson();
   
   @Override
