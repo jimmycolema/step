@@ -67,7 +67,7 @@ function initMap() {
   const centerUSA = {lat: 37.0902, lng: -95.7129};
   const favoriteSpots = [
     ["<h3>Mt. Ritter</h3> \
-      <p>I have this mountain tattooed onto my leg!</p> \
+      <p>I have this mountain tattood onto my leg!</p> \
       <img src=images/backpacking/bp-2.JPG width=500px>", 37.6894, -119.1990],
     ["<h3>Tuckerman's Ravine</h3> \
       <p>It was on this twelve hour road trip with my dad to backpack \
@@ -118,6 +118,8 @@ function initMap() {
       infowindow.open(map, marker);
     });
   }
+
+  let psaMap = new google.maps.Map(document.getElementById('psa-map'), mapOptions);
 }
 
 /**
