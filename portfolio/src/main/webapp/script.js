@@ -115,3 +115,8 @@ function createListElement(text) {
   liElement.innerText = text;
   return liElement;
 }
+
+async function deleteAllComments() {
+  const response = await fetch('/delete-comments', {method: 'POST'});
+  displayCommentsToPage();
+}
