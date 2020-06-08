@@ -66,26 +66,31 @@ function randomizeImage() {
 function initMap() {
   const centerUSA = {lat: 37.0902, lng: -95.7129};
   const favoriteSpots = [
-    ["Mt. Ritter", 37.6894, -119.1990],
-    ["Tuckerman's Ravine", 44.2625, -71.2983],
-    ["Black Forest Trail", 41.4724, -77.5017],
-    ["Lake Serene", 47.7814, -121.5700],
-    ["Pine Knob Shelter", 39.5429, -77.6018],
-    ["Rialto Beach", 47.9173, -124.6394],
-    ["Skyline Drive", 38.0325, -78.8571]];
+    ["<h3>Mt. Ritter</h3>", 37.6894, -119.1990],
+    ["<h3>Tuckerman's Ravine</h3>", 44.2625, -71.2983],
+    ["<h3>Black Forest Trail</h3>", 41.4724, -77.5017],
+    ["<h3>Lake Serene</h3>", 47.7814, -121.5700],
+    ["<h3>Pine Knob Shelter</h3>", 39.5429, -77.6018],
+    ["<h3>Rialto Beach</h3>", 47.9173, -124.6394],
+    ["<h3>Skyline Drive</h3>", 38.0325, -78.8571]];
 
   const mapOptions = {
     zoom: 3,
     center: centerUSA,
     mapTypeId: 'satellite'
     };
-  let map = new google.maps.Map(document.getElementById('map'), 
-    mapOptions);
+  
+  let map = new google.maps.Map(document.getElementById('map'), mapOptions);
   for (let i = 0; i < favoriteSpots.length; i++) {
+    let infowindow = new google.maps.InfoWindow({
+      content: favoriteSpots[i][0]
+    });
     let marker = new google.maps.Marker({
       position: new google.maps.LatLng(favoriteSpots[i][1], favoriteSpots[i][2]),
-      label: favoriteSpots[i][0],
       map: map
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
     });
   }
 }
