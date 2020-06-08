@@ -66,26 +66,56 @@ function randomizeImage() {
 function initMap() {
   const centerUSA = {lat: 37.0902, lng: -95.7129};
   const favoriteSpots = [
-    ["Mt. Ritter", 37.6894, -119.1990],
-    ["Tuckerman's Ravine", 44.2625, -71.2983],
-    ["Black Forest Trail", 41.4724, -77.5017],
-    ["Lake Serene", 47.7814, -121.5700],
-    ["Pine Knob Shelter", 39.5429, -77.6018],
-    ["Rialto Beach", 47.9173, -124.6394],
-    ["Skyline Drive", 38.0325, -78.8571]];
+    ["<h3>Mt. Ritter</h3> \
+      <p>I have this mountain tattooed onto my leg!</p> \
+      <img src=images/backpacking/bp-2.JPG width=500px>", 37.6894, -119.1990],
+    ["<h3>Tuckerman's Ravine</h3> \
+      <p>It was on this twelve hour road trip with my dad to backpack \
+         the Presidential Traverse that I first listened to Pink Floyd, \
+         now my favorite band!</p> \
+      <img src=images/backpacking/bp-11.jpg width=300px>", 44.2625, -71.2983],
+    ["<h3>Black Forest Trail</h3> \
+      <p>I've backpacked this trail three separate times with some very dear \
+         friends, and began going to Quaker meeting after the first! I've \
+         gone twice in the winter, and have hitch-hiked in an old van with \
+         a nice hippie and a dog!</p> \
+      <img src=images/friends/friend-2.JPG width=500px>", 41.4724, -77.5017],
+    ["<h3>Lake Serene</h3> \
+      <p>I biked seven miles along the side of the highway at night with \
+         headlamps and friends after taking a bus for three hours to camp \
+         here!</p> \
+      <img src=images/friends/friend-3.JPG width=500px>", 47.7814, -121.5700],
+    ["<h3>Pine Knob Shelter</h3> \
+      <p>I've probably slept in this shelter at least 10 times over the the \
+         course of my life! This stretch of the AT is where I went on my \
+         first ever backpacking trip!</p>", 39.5429, -77.6018],
+    ["<h3>Rialto Beach</h3> \
+      <p>While watching the stars on the shores of the Olympic, my friends \
+         and I discussed how amazingly old the matter that makes up all that \
+         we see is, while throwing driftwood back into the ocean. \
+      <img src=images/backpacking/bp-10.jpg width=500px>", 47.9173, -124.6394],
+    ["<h3>Skyline Drive</h3> \
+      <p>I didn't buy the Farmer's Oats flavored Monster Energy drink on \
+         this trip!<p> \
+      <img src=images/friends/friend-8.JPG width=500px>", 38.0325, -78.8571]];
 
   const mapOptions = {
     zoom: 3,
     center: centerUSA,
     mapTypeId: 'satellite'
     };
-  let map = new google.maps.Map(document.getElementById('map'), 
-    mapOptions);
+  
+  let map = new google.maps.Map(document.getElementById('map'), mapOptions);
   for (let i = 0; i < favoriteSpots.length; i++) {
+    let infowindow = new google.maps.InfoWindow({
+      content: favoriteSpots[i][0]
+    });
     let marker = new google.maps.Marker({
       position: new google.maps.LatLng(favoriteSpots[i][1], favoriteSpots[i][2]),
-      label: favoriteSpots[i][0],
       map: map
+    });
+    marker.addListener('click', function() {
+      infowindow.open(map, marker);
     });
   }
 }
