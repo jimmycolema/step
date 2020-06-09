@@ -167,7 +167,7 @@ function initMap() {
 }
 
 /*
- * Fetch user markers from datastore and add them to map
+ * Fetches user markers from datastore and adds them to map
  */
 async function fetchMarkers() {
   const response = await fetch('/markers');
