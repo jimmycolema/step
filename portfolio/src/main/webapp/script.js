@@ -12,6 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+let map;
+let editMarker;
+
 /**
  * Adds a random piece of Uncle Iroh wisdom to the page
  */
@@ -60,14 +63,46 @@ function randomizeImage() {
 }
 
 /**
- * Generates a map centered on the United States with markers placed on 
- * specified locations. 
+ * Fetches text from the server ArrayList and adds them to the DOM.
+ */
+async function displayCommentsToPage() {
+  const maxNumComments = document.getElementById("max-num-comments").value;
+  const response = await fetch(`/comments?max-num-comments=${maxNumComments}`);
+  const textArray = await response.json();
+
+  const arrayTextElement = document.getElementById('array-text-container');
+  arrayTextElement.innerHTML = '';
+    
+  for (let i = 0; i < textArray.length; i++) {
+    arrayTextElement.appendChild(
+        createListElement(textArray[i] + '\n'));
+  }
+}
+
+/*
+ * Creates an <li> element containing text. 
+ */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}
+
+async function deleteAllComments() {
+  const response = await fetch('/delete-comments', {method: 'POST'});
+  displayCommentsToPage();
+}
+
+/**
+ * Generates two maps: one centered on the United States with markers placed on 
+ * specified backpacking locations, the other displaying data pulled from the 
+ * internet.
  */
 function initMap() {
   const centerUSA = {lat: 37.0902, lng: -95.7129};
   const favoriteSpots = [
     ["<h3>Mt. Ritter</h3> \
-      <p>I have this mountain tattooed onto my leg!</p> \
+      <p>I have this mountain tattood onto my leg!</p> \
       <img src=images/backpacking/bp-2.JPG width=500px>", 37.6894, -119.1990],
     ["<h3>Tuckerman's Ravine</h3> \
       <p>It was on this twelve hour road trip with my dad to backpack \
@@ -105,7 +140,8 @@ function initMap() {
     mapTypeId: 'satellite'
     };
   
-  let map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  // Add Jimmy hard-coded markers to map
   for (let i = 0; i < favoriteSpots.length; i++) {
     let infowindow = new google.maps.InfoWindow({
       content: favoriteSpots[i][0]
@@ -114,39 +150,104 @@ function initMap() {
       position: new google.maps.LatLng(favoriteSpots[i][1], favoriteSpots[i][2]),
       map: map
     });
+
     marker.addListener('click', function() {
       infowindow.open(map, marker);
     });
   }
+
+  map.addListener('click', (event) => {
+    createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
+  });
+
+  // Add user-entered markers
+  fetchMarkers();
+
+  let psaMap = new google.maps.Map(document.getElementById('psa-map'), mapOptions);
 }
 
-/**
- * Fetches text from the server ArrayList and adds them to the DOM.
+/*
+ * Fetches user markers from datastore and adds them to map
  */
-async function displayCommentsToPage() {
-  const maxNumComments = document.getElementById("max-num-comments").value;
-  const response = await fetch(`/comments?max-num-comments=${maxNumComments}`);
-  const textArray = await response.json();
+async function fetchMarkers() {
+  const response = await fetch('/markers');
+  const markers = await response.json();
 
-  const arrayTextElement = document.getElementById('array-text-container');
-  arrayTextElement.innerHTML = '';
-    
-  for (let i = 0; i < textArray.length; i++) {
-    arrayTextElement.appendChild(
-        createListElement(textArray[i] + '\n'));
+  for (let i = 0; i < markers.length; i++) {
+    marker = markers[i];
+
+    let {content, lat, lng} = marker;
+    createMarkerForDisplay(lat, lng, content);
   }
 }
 
 /*
- * Creates an <li> element containing text. 
+ * Creates a marker that shows a read-only info window when clicked. 
  */
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+function createMarkerForDisplay(latitude, longitude, content) {
+  const marker =
+      new google.maps.Marker({position: {lat: latitude, lng: longitude}, map: map});
+
+  const infoWindow = new google.maps.InfoWindow({content: content});
+  marker.addListener('click', () => {
+    infoWindow.open(map, marker);
+  });
+}
+ 
+/*
+ * Sends a marker to the backend for saving. 
+ */
+function postMarker(latitude, longitude, content) {
+  const params = new URLSearchParams();
+  params.append('latitude', latitude);
+  params.append('longitude', longitude);
+  params.append('content', content);
+
+  fetch('/markers', {method: 'POST', body: params});
 }
 
-async function deleteAllComments() {
-  const response = await fetch('/delete-comments', {method: 'POST'});
-  displayCommentsToPage();
+/*
+ * Creates a marker that shows a textbox the user can edit. 
+ */
+function createMarkerForEdit(latitude, longitude) {
+  // If we're already showing an editable marker, then remove it.
+  if (editMarker) {
+    editMarker.setMap(null);
+  }
+
+  editMarker =
+      new google.maps.Marker({position: {lat: latitude, lng: longitude}, map: map});
+
+  const infoWindow =
+      new google.maps.InfoWindow({content: buildInfoWindowInput(latitude, longitude)});
+
+  // When the user closes the editable info window, remove the marker.
+  google.maps.event.addListener(infoWindow, 'closeclick', () => {
+    editMarker.setMap(null);
+  });
+
+  infoWindow.open(map, editMarker);
+}
+
+/*
+ * Builds and returns HTML elements that show an editable textbox and a submit
+ * button.
+ */
+function buildInfoWindowInput(latitude, longitude) {
+  const textBox = document.createElement('textarea');
+  const button = document.createElement('button');
+  button.appendChild(document.createTextNode('Submit'));
+
+  button.onclick = () => {
+    postMarker(latitude, longitude, textBox.value);
+    createMarkerForDisplay(latitude, longitude, textBox.value);
+    editMarker.setMap(null);
+  };
+
+  const containerDiv = document.createElement('div');
+  containerDiv.appendChild(textBox);
+  containerDiv.appendChild(document.createElement('br'));
+  containerDiv.appendChild(button);
+
+  return containerDiv;
 }

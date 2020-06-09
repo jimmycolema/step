@@ -106,6 +106,21 @@ body, html {
   width: 800px;
 }
 
+.marker-input-box {
+  background-color: #333;
+  border: 1px;
+  border-color: black;
+  border-style: solid;
+  color: white;
+  float: left;
+  font-size: larger;
+  height: 50px;
+  margin: 5px 5px 5px 10px;
+  padding: 2px;
+  text-align: center;
+  width: 800px;
+}
+
 /* 
  * Hide the images by default 
  */
@@ -158,6 +173,17 @@ body, html {
 .prev:hover,
 .next:hover {
   background-color: rgba(0, 0, 0, 0.8);
+}
+
+#psa-map {
+  border: solid black 1px;
+  float: left;
+  height: 500px;
+  margin-right: 5px;
+  margin-left: 10px;
+  margin-top: 10px;
+  padding: 2px;
+  width: 800px;
 }
 
 /* 
