@@ -93,7 +93,6 @@ async function deleteAllComments() {
   displayCommentsToPage();
 }
 
-
 /**
  * Generates two maps: one centered on the United States with markers placed on 
  * specified backpacking locations, the other displaying data pulled from the 
@@ -152,14 +151,14 @@ function initMap() {
       map: map
     });
 
-    map.addListener('click', (event) => {
-      createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
-    });
-
     marker.addListener('click', function() {
       infowindow.open(map, marker);
     });
   }
+
+  map.addListener('click', (event) => {
+    createMarkerForEdit(event.latLng.lat(), event.latLng.lng());
+  });
 
   // Add user-entered markers
   fetchMarkers();
@@ -175,9 +174,11 @@ async function fetchMarkers() {
   const markers = await response.json();
 
   for (let i = 0; i < markers.length; i++) {
+    marker = markers[i];
+
     let content = marker.content;
-    let latitude = marker.latitude;
-    let longitude = marker.longitude;
+    let latitude = marker.lat;
+    let longitude = marker.lng;
 
     createMarkerForDisplay(latitude, longitude, content);
   }

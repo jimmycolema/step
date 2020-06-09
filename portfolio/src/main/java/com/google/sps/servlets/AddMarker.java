@@ -38,7 +38,7 @@ public class AddMarker extends HttpServlet {
   
   private static final Gson gson = new Gson();
   private static final Query query = new Query("Marker");
-
+  
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
