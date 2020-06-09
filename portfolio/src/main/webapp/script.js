@@ -176,11 +176,8 @@ async function fetchMarkers() {
   for (let i = 0; i < markers.length; i++) {
     marker = markers[i];
 
-    let content = marker.content;
-    let latitude = marker.lat;
-    let longitude = marker.lng;
-
-    createMarkerForDisplay(latitude, longitude, content);
+    let {content, lat, lng} = marker;
+    createMarkerForDisplay(lat, lng, content);
   }
 }
 
