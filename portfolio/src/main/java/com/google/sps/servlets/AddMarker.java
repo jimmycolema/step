@@ -32,7 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
 import org.jsoup.safety.Whitelist;
 
-/** Servlet that allows user to post the name of their own backpacking haunt */
+/** Servlet that allows user to post the name of their own backpacking haunt. */
 @WebServlet("/markers")
 public class AddMarker extends HttpServlet {
   
@@ -69,7 +69,7 @@ public class AddMarker extends HttpServlet {
   }
 
   /*
-   * Store marker in Datastore
+   * Store marker in Datastore.
    */
   public void storeMarker(Marker marker) {
     Entity markerEntity = new Entity("Marker");
@@ -82,7 +82,7 @@ public class AddMarker extends HttpServlet {
   }
 
   /*
-   * Get the lat, lon, and name of location 
+   * Get the lat, lng, and name of location.
    */
   private Collection<Marker> getMarkers() {
     Collection<Marker> markers = new ArrayList<>();
