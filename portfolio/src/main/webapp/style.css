@@ -107,11 +107,11 @@ body, html {
 }
 
 .marker-input-box {
-  color: white;
   background-color: #333;
   border: 1px;
   border-color: black;
   border-style: solid;
+  color: white;
   float: left;
   font-size: larger;
   height: 50px;
