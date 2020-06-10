@@ -76,10 +76,12 @@ async function displayCommentsToPage() {
   for (let i = 0; i < textArray.length; i++) {
     let comment = textArray[i];
     let commentString = comment.comment;
+    let userName = comment.userName;
     let sentimentScore = comment.sentimentScore;
 
     arrayTextElement.appendChild(
-        createListElement(commentString + ' ' + '(' + sentimentScore + ')' + '\n'));
+        createListElement(commentString + ' ' + '(' + sentimentScore + ')' + '\n' +
+                          '- ' + userName + '\n'));
   }
 }
 

@@ -21,17 +21,23 @@ package com.google.sps.data;
 public class Comment {
 
   private final String comment;
+  private final String userName;
   private final double sentimentScore;
   private final double timestamp;
 
-  public Comment(String comment, double sentimentScore, double timestamp) {
+  public Comment(String comment, String userName, double sentimentScore, double timestamp) {
     this.comment = comment;
+    this.userName = userName;
     this.sentimentScore = sentimentScore;
     this.timestamp = timestamp;
   }
 
   public String getComment() {
     return comment;
+  }
+
+  public String getUserName() {
+    return userName;
   }
 
   public double getSentimentScore() {
