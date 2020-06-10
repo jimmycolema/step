@@ -25,6 +25,7 @@ import com.google.cloud.language.v1.Document;
 import com.google.cloud.language.v1.LanguageServiceClient;
 import com.google.cloud.language.v1.Sentiment;
 import com.google.gson.Gson;
+import com.google.sps.data.Comment;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.servlet.annotation.WebServlet;
@@ -44,27 +45,22 @@ public class CommentForumServlet extends HttpServlet {
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    response.setContentType("application/json;");
     int maxNumComments = getMaxNumComments(request);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    // Get all messages stored on Datastore
-    ArrayList<String> messages = new ArrayList<String>();
-    for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(maxNumComments))) {
-      String comment = (String) entity.getProperty("comment");
-      messages.add(comment);
-    }
+    Collection<Comment> comments = getComments(maxNumComments);
+    String json = convertToJson(comments);
 
-    response.setContentType("text/html;");
-    String json = convertToJson(messages);
     response.getWriter().println(json);
   }
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Parse input from the form
-    String comment = getParameter(request, "text-input", "");
+    String commentString = getParameter(request, "text-input", "");
     boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
     boolean lowerCase = Boolean.parseBoolean(getParameter(request, "lower-case", "false"));
     long timestamp = System.currentTimeMillis();
@@ -74,14 +70,14 @@ public class CommentForumServlet extends HttpServlet {
       lowerCase = false;
     }
     if (upperCase) {
-      comment = comment.toUpperCase();
+      commentString = commentString.toUpperCase();
     }
     if (lowerCase) {
-      comment = comment.toLowerCase();
+      commentString = commentString.toLowerCase();
     }
 
     Document doc =
-        Document.newBuilder().setContent(comment).setType(Document.Type.PLAIN_TEXT).build();
+        Document.newBuilder().setContent(commentString).setType(Document.Type.PLAIN_TEXT).build();
     LanguageServiceClient languageService = LanguageServiceClient.create();
     Sentiment sentiment = languageService.analyzeSentiment(doc).getDocumentSentiment();
     float score = sentiment.getScore();
@@ -89,19 +85,14 @@ public class CommentForumServlet extends HttpServlet {
 
     System.out.println("Sentiment Analysis Score: " + score);
 
-    Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("comment", comment);
-    commentEntity.setProperty("timestamp", timestamp);
-    commentEntity.setProperty("sentimentScore", sentimentScore);
-
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(commentEntity);
+    Comment comment = new Comment(commentString, score, timestamp);
+    storeComment(comment);
 
     response.sendRedirect("/index.html");
   }
 
-  private String convertToJson(ArrayList<String> messages) {
-    String json = gson.toJson(messages);
+  private String convertToJson(Collection<Comment> comments) {
+    String json = gson.toJson(comments);
     return json;
   }
 
@@ -138,5 +129,31 @@ public class CommentForumServlet extends HttpServlet {
     }
 
     return maxNumComments;
+  }
+
+  public void storeComment(Comment comment) {
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("comment", comment.getComment());
+    commentEntity.setProperty("timestamp", comment.getTimestamp());
+    commentEntity.setProperty("sentiment-score", comment.getSentimentScore());
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+  }
+
+  private Collection<Comment> getComments(int maxNumComments) {
+    Collection<Comment> comments = new ArrayList<>();
+
+    // Get all comments stored on Datastore
+    for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(maxNumComments))) {
+      String commentString = (String) entity.getProperty("comment");
+      float sentimentScore = (float) entity.getProperty("sentiment-score");
+      float timestamp = (float) entity.getProperty("timestamp");
+
+      Comment comment = new Comment(commentString, sentimentScore, timestamp);
+      comments.add(comment);
+    }
+
+    return comments;
   }
 }

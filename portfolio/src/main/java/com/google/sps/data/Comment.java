@@ -34,11 +34,11 @@ public class Comment {
     return comment;
   }
 
-  public float sentimentScore() {
+  public float getSentimentScore() {
     return sentimentScore;
   }
 
-  public float timestamp() {
+  public float getTimestamp() {
     return timestamp;
   }
 }
