@@ -40,7 +40,7 @@ public class CommentForumServlet extends HttpServlet {
 
   private static final Gson gson = new Gson();
   private static final Query query = new Query("Comment")
-    .addSort("timestamp", SortDirection.DESCENDING);
+    .addSort("timestamp_ms", SortDirection.DESCENDING);
   private static final int MAX_NUM_COMMENTS = 100;
   private static final int MIN_NUM_COMMENTS = 0;
   
@@ -61,7 +61,7 @@ public class CommentForumServlet extends HttpServlet {
     String commentString = getParameter(request, "text-input", "");
     boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
     boolean lowerCase = Boolean.parseBoolean(getParameter(request, "lower-case", "false"));
-    long timestamp = System.currentTimeMillis();
+    long timestamp_ms = System.currentTimeMillis();
 
     if (upperCase && lowerCase) {
       upperCase = false;
@@ -83,7 +83,7 @@ public class CommentForumServlet extends HttpServlet {
 
     System.out.println("Sentiment Analysis Score: " + score);
 
-    Comment comment = new Comment(commentString, score, timestamp);
+    Comment comment = new Comment(commentString, score, timestamp_ms);
     storeComment(comment);
 
     response.sendRedirect("/index.html");
@@ -132,7 +132,7 @@ public class CommentForumServlet extends HttpServlet {
   public void storeComment(Comment comment) {
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("comment", comment.getComment());
-    commentEntity.setProperty("timestamp", comment.getTimestamp());
+    commentEntity.setProperty("timestamp_ms", comment.getTimestamp_ms());
     commentEntity.setProperty("sentiment-score", comment.getSentimentScore());
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -148,9 +148,9 @@ public class CommentForumServlet extends HttpServlet {
     for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(maxNumComments))) {
       String commentString = (String) entity.getProperty("comment");
       double sentimentScore = (double) entity.getProperty("sentiment-score");
-      double timestamp = (double) entity.getProperty("timestamp");
+      double timestamp_ms = (double) entity.getProperty("timestamp_ms");
 
-      Comment comment = new Comment(commentString, sentimentScore, timestamp);
+      Comment comment = new Comment(commentString, sentimentScore, timestamp_ms);
       comments.add(comment);
     }
 
