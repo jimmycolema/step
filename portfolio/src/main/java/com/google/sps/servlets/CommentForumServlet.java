@@ -28,7 +28,7 @@ import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -48,7 +48,7 @@ public class CommentForumServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     int maxNumComments = getMaxNumComments(request);
 
-    Collection<Comment> comments = getComments(maxNumComments);
+    List<Comment> comments = getComments(maxNumComments);
     String json = gson.toJson(comments);
 
     response.setContentType("application/json;");
@@ -89,7 +89,7 @@ public class CommentForumServlet extends HttpServlet {
     response.sendRedirect("/index.html");
   }
 
-  private String convertToJson(Collection<Comment> comments) {
+  private String convertToJson(List<Comment> comments) {
     String json = gson.toJson(comments);
     return json;
   }
@@ -139,8 +139,8 @@ public class CommentForumServlet extends HttpServlet {
     datastore.put(commentEntity);
   }
 
-  private Collection<Comment> getComments(int maxNumComments) {
-    Collection<Comment> comments = new ArrayList<>();
+  private List<Comment> getComments(int maxNumComments) {
+    List<Comment> comments = new ArrayList<>();
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
