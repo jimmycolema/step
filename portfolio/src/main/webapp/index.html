@@ -60,12 +60,13 @@
 
         <label for="max-num-comments">Choose number of comments to display:</label>
         <input type="number" id="max-num-comments" value="5" onchange="displayCommentsToPage()">
+        <br/></br/>
         <div id="array-text-container"></div>
         <br/>
 
         <form action="/comments" method="POST">
-          <textarea name="text-input">Enter comment here...</textarea>
-          <textarea name="user-name">Enter name here...</textarea>
+          <textarea name="text-input" placeholder="Enter comment here..."></textarea>
+          <textarea name="user-name" placeholder="Enter name here..."></textarea>
           <br/>
           <input type="checkbox" name="upper-case" value="true"> Upper-case
           <br/>

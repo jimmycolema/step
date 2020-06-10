@@ -72,17 +72,31 @@ async function displayCommentsToPage() {
 
   const arrayTextElement = document.getElementById('array-text-container');
   arrayTextElement.innerHTML = '';
-    
+  
+  if (!textArray.length) {
+    arrayTextElement.innerHTML = 'Be the first to comment below!';
+  }
+
   for (let i = 0; i < textArray.length; i++) {
-    let comment = textArray[i];
+    arrayTextElement.appendChild(
+        createCommentElement(textArray[i]);
+  }
+}
+
+/**
+ * Creates comment element containing text, name, and image based on sentiment.
+ */
+function createCommentElement(comment) {
     let commentString = comment.comment;
     let userName = comment.userName;
     let sentimentScore = comment.sentimentScore;
 
-    arrayTextElement.appendChild(
-        createListElement(commentString + ' ' + '(' + sentimentScore + ')' + '\n' +
-                          '- ' + userName + '\n'));
-  }
+    let newCommentBox = document.createElement('div');
+    newComment.setAttribute('class', 'comment-box');
+    let sentimentImage = document.createElement('img');
+
+    
+
 }
 
 /*

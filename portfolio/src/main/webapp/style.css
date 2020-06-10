@@ -53,6 +53,11 @@ body, html {
   width: 16.66%;
 }
 
+.comment-box {
+  align-items: center;
+  display: flex;
+}
+
 #content {
   color: white;
   margin-left: auto;
@@ -239,6 +244,13 @@ body, html {
   clear: both;
   content: "";
   display: table;
+}
+
+.sentiment-avatar {
+  display: flex;
+  border-radius: 50%;
+  margin: 5px;
+  width: 100%;
 }
 
 /* 
