@@ -28,6 +28,7 @@ import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -45,15 +46,12 @@ public class CommentForumServlet extends HttpServlet {
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("application/json;");
     int maxNumComments = getMaxNumComments(request);
 
-    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    PreparedQuery results = datastore.prepare(query);
-
     Collection<Comment> comments = getComments(maxNumComments);
-    String json = convertToJson(comments);
+    String json = gson.toJson(comments);
 
+    response.setContentType("application/json;");
     response.getWriter().println(json);
   }
 
@@ -143,12 +141,14 @@ public class CommentForumServlet extends HttpServlet {
 
   private Collection<Comment> getComments(int maxNumComments) {
     Collection<Comment> comments = new ArrayList<>();
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
 
     // Get all comments stored on Datastore
     for (Entity entity : results.asIterable(FetchOptions.Builder.withLimit(maxNumComments))) {
       String commentString = (String) entity.getProperty("comment");
-      float sentimentScore = (float) entity.getProperty("sentiment-score");
-      float timestamp = (float) entity.getProperty("timestamp");
+      double sentimentScore = (double) entity.getProperty("sentiment-score");
+      double timestamp = (double) entity.getProperty("timestamp");
 
       Comment comment = new Comment(commentString, sentimentScore, timestamp);
       comments.add(comment);

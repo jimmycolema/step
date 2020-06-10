@@ -21,10 +21,10 @@ package com.google.sps.data;
 public class Comment {
 
   private final String comment;
-  private final float sentimentScore;
-  private final float timestamp;
+  private final double sentimentScore;
+  private final double timestamp;
 
-  public Comment(String comment, float sentimentScore, float timestamp) {
+  public Comment(String comment, double sentimentScore, double timestamp) {
     this.comment = comment;
     this.sentimentScore = sentimentScore;
     this.timestamp = timestamp;
@@ -34,11 +34,11 @@ public class Comment {
     return comment;
   }
 
-  public float getSentimentScore() {
+  public double getSentimentScore() {
     return sentimentScore;
   }
 
-  public float getTimestamp() {
+  public double getTimestamp() {
     return timestamp;
   }
 }
