@@ -78,25 +78,38 @@ async function displayCommentsToPage() {
   }
 
   for (let i = 0; i < textArray.length; i++) {
-    arrayTextElement.appendChild(
-        createCommentElement(textArray[i]);
+    createCommentElement(textArray[i], i);
   }
 }
 
 /**
  * Creates comment element containing text, name, and image based on sentiment.
  */
-function createCommentElement(comment) {
-    let commentString = comment.comment;
-    let userName = comment.userName;
-    let sentimentScore = comment.sentimentScore;
+function createCommentElement(comment, i) {
+  let commentString = comment.comment;
+  let userName = comment.userName;
+  let sentimentScore = comment.sentimentScore;
+  
+  let currentComment = 'comment-' + i;
 
-    let newCommentBox = document.createElement('div');
-    newComment.setAttribute('class', 'comment-box');
-    let sentimentImage = document.createElement('img');
+  let newCommentContent = document.createElement('div');
+  newCommentContent.setAttribute('class', 'comment-content');
+  newCommentContent.setAttribute('id', currentComment);
 
-    
+  let sentimentImage = document.createElement('img');
+  if (sentimentScore > .5) {
+    sentimentImage.setAttribute('src', 'images/nowhereMan/nowhere-man-happy.png');
+  } 
+  else if (sentimentScore < -.5) {
+    sentimentImage.setAttribute('src', 'images/nowhereMan/nowhere-man-sad.png');
+  }
+  else {
+    sentimentImage.setAttribute('src', 'images/nowhereMan/nowhere-man-neutral.jpg');
+  }
 
+  document.getElementById('array-text-container').appendChild(newCommentContent);
+  document.getElementById(currentComment).innerText = commentString + '\n -' + userName + '\n\n';
+  document.getElementById(currentComment).appendChild(sentimentImage);
 }
 
 /*
