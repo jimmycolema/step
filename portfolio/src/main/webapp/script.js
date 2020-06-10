@@ -79,7 +79,7 @@ async function displayCommentsToPage() {
     let sentimentScore = comment.sentimentScore;
 
     arrayTextElement.appendChild(
-        createListElement(commentString + ' ' + sentimentScore + '\n'));
+        createListElement(commentString + ' ' + '(' + sentimentScore + ')' + '\n'));
   }
 }
 
