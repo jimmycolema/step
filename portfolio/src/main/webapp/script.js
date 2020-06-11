@@ -99,11 +99,9 @@ function createCommentElement(comment, i) {
   let sentimentImage = document.createElement('img');
   if (sentimentScore > .5) {
     sentimentImage.setAttribute('src', 'images/nowhereMan/nowhere-man-happy.png');
-  } 
-  else if (sentimentScore < -.5) {
+  } else if (sentimentScore < -.5) {
     sentimentImage.setAttribute('src', 'images/nowhereMan/nowhere-man-sad.png');
-  }
-  else {
+  } else {
     sentimentImage.setAttribute('src', 'images/nowhereMan/nowhere-man-neutral.jpg');
   }
 
