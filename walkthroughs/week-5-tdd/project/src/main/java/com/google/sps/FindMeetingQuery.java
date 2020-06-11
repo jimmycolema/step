@@ -14,10 +14,35 @@
 
 package com.google.sps;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public final class FindMeetingQuery {
+
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+    // Collect parameters of meeting request
+    Collection<String> attendees = request.getAttendees();
+    Collection<String> optionalAttendees = request.getAttendees();
+    long duration = request.getDuration();
+
+    Collection<TimeRange> viableTimes = new ArrayList<TimeRange>();
+    Collection<TimeRange> reservedTimes = new ArrayList<TimeRange>();
+
+    // Case: Duration is longer than a day
+    if (duration > TimeRange.WHOLE_DAY.duration()) {
+      return viableTimes;
+    }
+
+    // Case: There are no attendees
+    if (attendees.isEmpty()) {
+      TimeRange unrestrictedDay = TimeRange.WHOLE_DAY;
+      viableTimes.add(unrestrictedDay);
+      return viableTimes;
+    }
+
+    return viableTimes;
   }
 }
