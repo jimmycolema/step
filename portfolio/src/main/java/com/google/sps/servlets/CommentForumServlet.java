@@ -132,7 +132,7 @@ public class CommentForumServlet extends HttpServlet {
 
   public void storeComment(Comment comment) {
     Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("comment", comment.getComment());
+    commentEntity.setProperty("comment", comment.getCommentString());
     commentEntity.setProperty("user-name", comment.getUserName());
     commentEntity.setProperty("timestamp_ms", comment.getTimestampMs());
     commentEntity.setProperty("sentiment-score", comment.getSentimentScore());
