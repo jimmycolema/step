@@ -28,7 +28,7 @@ import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +40,7 @@ public class CommentForumServlet extends HttpServlet {
 
   private static final Gson gson = new Gson();
   private static final Query query = new Query("Comment")
-    .addSort("timestamp", SortDirection.DESCENDING);
+    .addSort("timestamp_ms", SortDirection.DESCENDING);
   private static final int MAX_NUM_COMMENTS = 100;
   private static final int MIN_NUM_COMMENTS = 0;
   
@@ -48,7 +48,7 @@ public class CommentForumServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     int maxNumComments = getMaxNumComments(request);
 
-    Collection<Comment> comments = getComments(maxNumComments);
+    List<Comment> comments = getComments(maxNumComments);
     String json = gson.toJson(comments);
 
     response.setContentType("application/json;");
@@ -62,7 +62,7 @@ public class CommentForumServlet extends HttpServlet {
     String userName = getParameter(request, "user-name", "Anonymous");
     boolean upperCase = Boolean.parseBoolean(getParameter(request, "upper-case", "false"));
     boolean lowerCase = Boolean.parseBoolean(getParameter(request, "lower-case", "false"));
-    long timestamp = System.currentTimeMillis();
+    long timestamp_ms = System.currentTimeMillis();
 
     if (upperCase && lowerCase) {
       upperCase = false;
@@ -90,7 +90,7 @@ public class CommentForumServlet extends HttpServlet {
     response.sendRedirect("/index.html");
   }
 
-  private String convertToJson(Collection<Comment> comments) {
+  private String convertToJson(List<Comment> comments) {
     String json = gson.toJson(comments);
     return json;
   }
@@ -141,8 +141,8 @@ public class CommentForumServlet extends HttpServlet {
     datastore.put(commentEntity);
   }
 
-  private Collection<Comment> getComments(int maxNumComments) {
-    Collection<Comment> comments = new ArrayList<>();
+  private List<Comment> getComments(int maxNumComments) {
+    List<Comment> comments = new ArrayList<>();
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
@@ -151,7 +151,7 @@ public class CommentForumServlet extends HttpServlet {
       String commentString = (String) entity.getProperty("comment");
       String userName = (String) entity.getProperty("user-name");
       double sentimentScore = (double) entity.getProperty("sentiment-score");
-      double timestamp = (double) entity.getProperty("timestamp");
+      double timestamp_ms = (double) entity.getProperty("timestamp_ms");
 
       Comment comment = new Comment(commentString, userName, sentimentScore, timestamp);
       comments.add(comment);
