@@ -86,10 +86,7 @@ async function displayCommentsToPage() {
  * Creates comment element containing text, name, and image based on sentiment.
  */
 function createCommentElement(comment, i) {
-  let commentString = comment.comment;
-  let userName = comment.userName;
-  let sentimentScore = comment.sentimentScore;
-  
+  const {commentString, userName, sentimentScore} = comment;
   let currentComment = 'comment-' + i;
 
   let newCommentContent = document.createElement('div');
