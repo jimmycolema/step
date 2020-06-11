@@ -112,15 +112,6 @@ function createCommentElement(comment, i) {
   document.getElementById(currentComment).appendChild(sentimentImage);
 }
 
-/*
- * Creates an <li> element containing text. 
- */
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
-}
-
 async function deleteAllComments() {
   const response = await fetch('/delete-comments', {method: 'POST'});
   displayCommentsToPage();
