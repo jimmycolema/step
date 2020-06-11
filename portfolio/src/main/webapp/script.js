@@ -87,7 +87,7 @@ async function displayCommentsToPage() {
  */
 function createCommentElement(comment, i) {
   const {commentString, userName, sentimentScore} = comment;
-  let currentComment = 'comment-' + i;
+  let currentComment = `comment-${i}`;
 
   let newCommentContent = document.createElement('div');
   newCommentContent.setAttribute('class', 'comment-content');
@@ -103,7 +103,7 @@ function createCommentElement(comment, i) {
   }
 
   document.getElementById('array-text-container').appendChild(newCommentContent);
-  document.getElementById(currentComment).innerText = commentString + '\n -' + userName + '\n\n';
+  document.getElementById(currentComment).innerText = `${commentString}\n-${userName}\n\n`;
   document.getElementById(currentComment).appendChild(sentimentImage);
 }
 
