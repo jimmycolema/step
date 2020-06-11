@@ -84,7 +84,7 @@ public class CommentForumServlet extends HttpServlet {
 
     System.out.println("Sentiment Analysis Score: " + score);
 
-    Comment comment = new Comment(commentString, userName, score, timestamp);
+    Comment comment = new Comment(commentString, userName, score, timestamp_ms);
     storeComment(comment);
 
     response.sendRedirect("/index.html");
@@ -134,7 +134,7 @@ public class CommentForumServlet extends HttpServlet {
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("comment", comment.getComment());
     commentEntity.setProperty("user-name", comment.getUserName());
-    commentEntity.setProperty("timestamp", comment.getTimestamp());
+    commentEntity.setProperty("timestamp_ms", comment.getTimestampMs());
     commentEntity.setProperty("sentiment-score", comment.getSentimentScore());
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
@@ -153,7 +153,7 @@ public class CommentForumServlet extends HttpServlet {
       double sentimentScore = (double) entity.getProperty("sentiment-score");
       double timestamp_ms = (double) entity.getProperty("timestamp_ms");
 
-      Comment comment = new Comment(commentString, userName, sentimentScore, timestamp);
+      Comment comment = new Comment(commentString, userName, sentimentScore, timestamp_ms);
       comments.add(comment);
     }
 

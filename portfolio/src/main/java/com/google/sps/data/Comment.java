@@ -25,7 +25,7 @@ public class Comment {
   private final double sentimentScore;
   private final long timestamp_ms;
 
-  public Comment(String comment, String userName, double sentimentScore, double timestamp) {
+  public Comment(String comment, String userName, double sentimentScore, double timestamp_ms) {
     this.comment = comment;
     this.userName = userName;
     this.sentimentScore = sentimentScore;
