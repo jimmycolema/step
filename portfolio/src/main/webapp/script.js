@@ -77,10 +77,8 @@ async function displayCommentsToPage() {
     arrayTextElement.innerHTML = 'Be the first to comment below!';
   }
 
-  let i = 0;
-  for (let text of textArray) {
+  for (let i = 0; i < textsArray.length; i++) {
     createCommentElement(textArray[i], i);
-    i++;
   }
 }
 
