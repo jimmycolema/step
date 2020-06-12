@@ -94,9 +94,9 @@ function createCommentElement(comment, i) {
   newCommentContent.setAttribute('id', currentComment);
 
   let sentimentImage = document.createElement('img');
-  if (sentimentScore > .5) {
+  if (sentimentScore > 0.5) {
     sentimentImage.setAttribute('src', 'images/nowhereMan/nowhere-man-happy.png');
-  } else if (sentimentScore < -.5) {
+  } else if (sentimentScore < -0.5) {
     sentimentImage.setAttribute('src', 'images/nowhereMan/nowhere-man-sad.png');
   } else {
     sentimentImage.setAttribute('src', 'images/nowhereMan/nowhere-man-neutral.jpg');
