@@ -72,24 +72,39 @@ async function displayCommentsToPage() {
 
   const arrayTextElement = document.getElementById('array-text-container');
   arrayTextElement.innerHTML = '';
-    
-  for (let i = 0; i < textArray.length; i++) {
-    let comment = textArray[i];
-    let commentString = comment.comment;
-    let sentimentScore = comment.sentimentScore;
+  
+  if (!textArray.length) {
+    arrayTextElement.innerHTML = 'Be the first to comment below!';
+  }
 
-    arrayTextElement.appendChild(
-        createListElement(commentString + ' ' + '(' + sentimentScore + ')' + '\n'));
+  for (let i = 0; i < textsArray.length; i++) {
+    createCommentElement(textArray[i], i);
   }
 }
 
-/*
- * Creates an <li> element containing text. 
+/**
+ * Creates comment element containing text, name, and image based on sentiment.
  */
-function createListElement(text) {
-  const liElement = document.createElement('li');
-  liElement.innerText = text;
-  return liElement;
+function createCommentElement(comment, i) {
+  const {commentString, userName, sentimentScore} = comment;
+  let currentComment = `comment-${i}`;
+
+  let newCommentContent = document.createElement('div');
+  newCommentContent.setAttribute('class', 'comment-content');
+  newCommentContent.setAttribute('id', currentComment);
+
+  let sentimentImage = document.createElement('img');
+  if (sentimentScore > 0.5) {
+    sentimentImage.setAttribute('src', 'images/nowhereMan/nowhere-man-happy.png');
+  } else if (sentimentScore < -0.5) {
+    sentimentImage.setAttribute('src', 'images/nowhereMan/nowhere-man-sad.png');
+  } else {
+    sentimentImage.setAttribute('src', 'images/nowhereMan/nowhere-man-neutral.jpg');
+  }
+
+  document.getElementById('array-text-container').appendChild(newCommentContent);
+  document.getElementById(currentComment).innerText = `${commentString}\n-${userName}\n\n`;
+  document.getElementById(currentComment).appendChild(sentimentImage);
 }
 
 async function deleteAllComments() {

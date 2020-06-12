@@ -20,25 +20,31 @@ package com.google.sps.data;
  */
 public class Comment {
 
-  private final String comment;
+  private final String commentString;
+  private final String userName;
   private final double sentimentScore;
-  private final long timestamp_ms;
+  private final long timestampMs;
 
-  public Comment(String comment, double sentimentScore, double timestamp_ms) {
-    this.comment = comment;
+  public Comment(String commentString, String userName, double sentimentScore, double timestampMs) {
+    this.commentString = commentString;
+    this.userName = userName;
     this.sentimentScore = sentimentScore;
-    this.timestamp_ms = (long) timestamp_ms;
+    this.timestampMs = (long) timestampMs;
   }
 
-  public String getComment() {
-    return comment;
+  public String getCommentString() {
+    return commentString;
+  }
+
+  public String getUserName() {
+    return userName;
   }
 
   public double getSentimentScore() {
     return sentimentScore;
   }
 
-  public double getTimestamp_ms() {
-    return timestamp_ms;
+  public double getTimestampMs() {
+    return timestampMs;
   }
 }
