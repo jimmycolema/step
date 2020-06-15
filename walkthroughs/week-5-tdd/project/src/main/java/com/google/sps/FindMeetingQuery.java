@@ -31,15 +31,14 @@ public final class FindMeetingQuery {
     long duration = request.getDuration();
 
     List<TimeRange> viableTimes = new ArrayList<>();
-    List<TimeRange> reservedTimes = new ArrayList<>();
 
     // List of pre-existing events sorted by starting time
-    events.stream()
-          .sorted((e1, e2) -> e1.getWhen().start() - e2.getWhen().start())
-          .filter (e -> !Collections.disjoint(e.getAttendees(), attendees))
-          .forEach(e -> {
-            reservedTimes.add(e.getWhen());
-          });
+    List<TimeRange> reservedTimes = 
+        events.stream()
+            .sorted((e1, e2) -> e1.getWhen().start() - e2.getWhen().start())
+            .filter (e -> !Collections.disjoint(e.getAttendees(), attendees))
+            .map(Event::getWhen)
+            .collect(Collectors.toList());
 
     viableTimes = calculateViableTimes(reservedTimes, duration);
     return viableTimes;
