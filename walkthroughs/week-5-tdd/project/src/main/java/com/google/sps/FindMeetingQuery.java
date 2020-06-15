@@ -73,12 +73,7 @@ public final class FindMeetingQuery {
       }
 
       int potentialEnd = potentialStart + (int) duration;
-      boolean inclusive;
-      if (i < reservedTimes.size()) {
-        inclusive = false;
-      } else {
-        inclusive = true;
-      }
+      boolean inclusive = i >= reservedTimes.size();
       // Add viable block if current scheduled event does not conflict
       if (potentialEnd <= reservedTimeStart) {
         TimeRange viableTime = TimeRange.fromStartEnd(potentialStart, reservedTimeStart, inclusive);
