@@ -14,6 +14,7 @@
 
 package com.google.sps;
 
+import java.lang.Math;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -48,28 +49,43 @@ public final class FindMeetingQuery {
     List<TimeRange> viableTimes = new ArrayList<>();
     int potentialStart = TimeRange.START_OF_DAY;
 
-    for (int i = 0; i < reservedTimes.size(); i++) {
-      int reservedTimeStart = reservedTimes.get(i).start();
-      int reservedTimeEnd = reservedTimes.get(i).end();
+    for (int i = 0; i <= reservedTimes.size(); i++) {
+      int reservedTimeStart;
+      int reservedTimeEnd;
+      if (i < reservedTimes.size()) {
+        reservedTimeStart = reservedTimes.get(i).start();
+        reservedTimeEnd = reservedTimes.get(i).end();
+      } else {
+        reservedTimeStart = TimeRange.END_OF_DAY;
+        reservedTimeEnd = TimeRange.END_OF_DAY;
+      }
 
-      // Add viable block if current scheduled event does not conflict
+      // Guard against nested events
+      while (i < reservedTimes.size() - 1 && reservedTimes.get(i + 1).start() <= reservedTimeEnd) {
+        int nextStart = reservedTimes.get(i + 1).start();
+        int nextEnd = reservedTimes.get(i + 1).end();
+
+        if (nextStart <= reservedTimeEnd) {
+          reservedTimeEnd = Math.max(nextEnd, reservedTimeEnd);
+        }
+
+        i++;
+      }
+
       int potentialEnd = potentialStart + (int) duration;
+      boolean inclusive;
+      if (i < reservedTimes.size()) {
+        inclusive = false;
+      } else {
+        inclusive = true;
+      }
+      // Add viable block if current scheduled event does not conflict
       if (potentialEnd <= reservedTimeStart) {
-        TimeRange viableTime = TimeRange.fromStartEnd(potentialStart, reservedTimeStart, false);
+        TimeRange viableTime = TimeRange.fromStartEnd(potentialStart, reservedTimeStart, inclusive);
         viableTimes.add(viableTime);
       }
 
       potentialStart = reservedTimeEnd;
-      // Guard against nested events
-      if (i < reservedTimes.size() - 1) {
-        int nextReservedTimeStart = reservedTimes.get(i+1);
-      }
-    }
-
-    int potentialEnd = potentialStart + (int) duration;
-    if (potentialEnd < TimeRange.END_OF_DAY) {
-      TimeRange viableTime = TimeRange.fromStartEnd(potentialStart, TimeRange.END_OF_DAY, true);
-      viableTimes.add(viableTime);
     }
 
     return viableTimes;
