@@ -28,7 +28,7 @@ public final class FindMeetingQuery {
     // Collect parameters of meeting request
     Collection<String> attendees = request.getAttendees();
     Collection<String> optionalAttendees = request.getAttendees();
-    int duration = (int) request.getDuration();
+    long duration = request.getDuration();
 
     List<TimeRange> viableTimes = new ArrayList<>();
     List<TimeRange> reservedTimes = new ArrayList<>();
@@ -72,7 +72,7 @@ public final class FindMeetingQuery {
         i++;
       }
 
-      int potentialEnd = potentialStart + (int) duration;
+      long potentialEnd = potentialStart + duration;
       boolean inclusive = i >= reservedTimes.size();
       // Add viable block if current scheduled event does not conflict
       if (potentialEnd <= reservedTimeStart) {
